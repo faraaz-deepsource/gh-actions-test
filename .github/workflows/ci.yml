@@ -13,12 +13,6 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-      - name: Set latest commit status as pending
-        uses: myrotvorets/set-commit-status-action@master
-        with:
-          sha: ${{ github.event.pull_request.head.sha }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          status: pending
       - name: Fail randomly
         run: |
           cat README.md
