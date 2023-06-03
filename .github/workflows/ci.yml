@@ -5,7 +5,7 @@ on:
 name: Configure treadmill
 jobs:
   report:
-    if: contains(github.event.comment.html_url, '/pull/')    # check if the comments come from pull request, exclude those from issue.
+    if: ${{ github.event.issue.pull_request && github.event.comment.body == '/deploy' }}   # check if the comments come from pull request, exclude those from issue.
     name: Configure treadmill
     runs-on:  [self-hosted, charmeleon]
     steps:
