@@ -12,11 +12,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
-      - name: Fail randomly
-        run: |
-          cat README.md
-          exit $((RANDOM % 2))        
+          fetch-depth: 0       
       - name: Add comment
         uses: actions/github-script@v6
         with:
