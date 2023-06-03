@@ -9,6 +9,12 @@ jobs:
     name: Configure treadmill
     runs-on:  [self-hosted, charmeleon]
     steps:
+      - name: Set latest commit status as pending
+        uses: myrotvorets/set-commit-status-action@master
+        with:
+          sha: ${{ steps.comment-branch.outputs.head_sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: pending
       - name: Fail randomly
         run: |
           cat README.md
