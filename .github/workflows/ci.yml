@@ -1,0 +1,37 @@
+on:
+  issue_comment:
+    types: created
+
+name: Configure treadmill
+jobs:
+  report:
+    if: contains(github.event.comment.html_url, '/pull/')    # check if the comments come from pull request, exclude those from issue.
+    name: Configure treadmill
+    runs-on:  [self-hosted, charmeleon]
+    steps:
+      - name: Fail randomly
+        run: |
+          cat README.md
+          exit $((RANDOM % 2))        
+      - name: Message success
+        if: ${{ success() }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Deployment succeeded! ✅',
+            });          
+      - name: Message failure
+        if: ${{ failure() }}
+        uses: actions/github-script@v4
+        with:
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Deployment failed! ❌',
+            }); 
