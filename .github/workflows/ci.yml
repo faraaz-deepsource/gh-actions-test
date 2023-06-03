@@ -7,7 +7,7 @@ jobs:
   report:
     if: ${{ github.event.issue.pull_request && github.event.comment.body == '/deploy' }}   # check if the comments come from pull request, exclude those from issue.
     name: Configure treadmill
-    runs-on:  [self-hosted, charmeleon]
+    runs-on:  ubuntu-latest
     steps:
       - name: Set latest commit status as pending
         uses: myrotvorets/set-commit-status-action@master
