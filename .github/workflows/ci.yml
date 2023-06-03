@@ -17,25 +17,19 @@ jobs:
         run: |
           cat README.md
           exit $((RANDOM % 2))        
-      - name: Message success
-        if: ${{ success() }}
-        uses: actions/github-script@v4
+      - name: Add comment to PR
+        uses: actions/github-script@v6
+        if: always()
         with:
           script: |
-            github.issues.createComment({
+            const name = '${{ github.workflow   }}';
+            const url = '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}';
+            const success = '${{ job.status }}' === 'success';
+            const body = `${name}: ${success ? 'succeeded ✅' : 'failed ❌'}\n${url}`;
+
+            await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Deployment succeeded! ✅',
-            });          
-      - name: Message failure
-        if: ${{ failure() }}
-        uses: actions/github-script@v4
-        with:
-          script: |
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Deployment failed! ❌',
-            }); 
+              body: body
+            })
