@@ -13,12 +13,17 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
+      - name: Get PR branch
+        uses: xt0rted/pull-request-comment-branch@v1
+        id: comment-branch
+
       - name: Set latest commit status as pending
         uses: myrotvorets/set-commit-status-action@master
         with:
-          sha: ${{ github.event.pull_request.head.sha }}
+          sha: ${{ steps.comment-branch.outputs.head_sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
           status: pending
+      
       - name: Add comment
         uses: actions/github-script@v6
         with:
