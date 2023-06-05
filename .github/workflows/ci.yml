@@ -2,7 +2,7 @@ on:
   issue_comment:
     types: created
 
-name: Configure treadmill
+name: Treadmill test
 jobs:
   report:
     if: ${{ github.event.issue.pull_request && github.event.comment.body == '/test' }}   # check if the comments come from pull request, exclude those from issue.
