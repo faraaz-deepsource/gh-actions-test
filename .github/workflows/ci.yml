@@ -5,7 +5,7 @@ on:
 name: Configure treadmill
 jobs:
   report:
-    if: ${{ github.event.issue.pull_request && github.event.comment.body == '/deploy' }}   # check if the comments come from pull request, exclude those from issue.
+    if: ${{ github.event.issue.pull_request && github.event.comment.body == '/test' }}   # check if the comments come from pull request, exclude those from issue.
     name: Configure treadmill
     runs-on:  ubuntu-latest
     steps:
