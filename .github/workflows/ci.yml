@@ -16,6 +16,11 @@ jobs:
       - name: Get PR branch
         uses: xt0rted/pull-request-comment-branch@v1
         id: comment-branch
+        
+      - name: Test SHA
+        run: |
+          echo "Action SHA is: ${{ steps.comment-branch.outputs.head_sha }}"
+          echo "PR SHA is: ${{ github.event.pull_request.head.sha }}"
 
       - name: Set latest commit status as pending
         uses: myrotvorets/set-commit-status-action@master
