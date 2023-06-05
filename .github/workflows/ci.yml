@@ -18,6 +18,7 @@ jobs:
         with:
           script: |
             const {owner, repo} = context.issue
+            console.log(owner, repo)
             github.reactions.createForIssueComment({
               owner,
               repo,
